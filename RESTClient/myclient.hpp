@@ -3,39 +3,32 @@
 #include "response.hpp"
 
 #include <boost/asio.hpp>
-
+#include <iostream>
 
 _START_HTTP_NAMESPACE
 namespace asio = boost::asio;
-
+typedef asio::ip::tcp::socket Http;
 static asio::io_service io_service;
-static HTTPClient defaultClient;
+static Client<Http> defaultClient;
 
-static void checkMethod(const std::string& method) {
+static int checkMethod(std::string& method) {
 	if (method == "")
 	{
-
+		method = "GET"; // Get as default
 	} 
-	else if (method == "GET")
+	else if (method == "GET" || method == "POST" || method == "DELETE"
+		|| method == "PUT" || method == "HEAD")
 	{
-	}
-	else if (method == "POST")
-	{
-	}
-	else if (method == "DELETE")
-	{
-	}
-	else if (method == "PUT")
-	{
-	}
-	else if (method == "HEAD") 
-	{
+		// valid
 	}
 	else
 	{
+		std::cerr << "Invalid request method: " << method << std::endl;
+		return -1;
 	}
 }
 
+template <class protocol>
 class ClientBase {
 public:
 	ClientBase() {}
@@ -43,13 +36,13 @@ public:
 };
 
 template <class protocol>
-class HTTPClient<protocol>: public ClientBase
+class Client: public ClientBase<protocol>
 {
 	
 public:
-	HTTPClient(){
+	Client(){
 	}
-	~HTTPClient() {}
+	~Client() {}
 	Response request(const std::string& method, std::string url) {
 		
 	}

@@ -147,6 +147,7 @@
     <ClInclude Include="common.hpp" />
     <ClInclude Include="header.hpp" />
     <ClInclude Include="http.hpp" />
+    <ClInclude Include="myclient.hpp" />
     <ClInclude Include="request.hpp" />
     <ClInclude Include="response.hpp" />
     <ClInclude Include="status_code.hpp" />
